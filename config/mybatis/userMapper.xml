@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 1,此namespace要用对应接口的类路径一致 -->
+<!-- 此sql映射文件相当于UserMapper接口的实现类 -->
+<mapper namespace="com.ycg.ycexpress.dao.UserDao">
+	<resultMap type="com.ycg.ycexpress.beans.User" id="UserResult">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="password" property="passWord" />
+	</resultMap>
+
+	<sql id="column_list">id, name, passWord</sql>
+
+	<!-- 2,以下的增删改查以及其他方法的id名都要与接口的方法名一致 -->
+
+	<insert id="save" parameterType="com.ycg.ycexpress.beans.User">
+		insert into User(name, password) 
+		values(#{name},#{passWord})
+	</insert>
+	
+	<update id="update" parameterType="com.ycg.ycexpress.beans.User">
+		update User set name=#{name},password=#{passWord} where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete User
+		where id = #{id}
+	</delete>
+	
+	<select id="findById" resultMap="UserResult">
+		select * 
+		from User
+		where id = #{id}
+	</select>
+	
+	<select id="findAll" resultMap="UserResult">
+		select 
+		<include refid="column_list"></include>
+		from User
+	</select>
+
+</mapper>
