@@ -47,8 +47,6 @@ public class AppHttpServerHandler extends SimpleChannelInboundHandler<FullHttpRe
 		super();
 	}
 
-
-
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		super.exceptionCaught(ctx, cause);
@@ -63,39 +61,28 @@ public class AppHttpServerHandler extends SimpleChannelInboundHandler<FullHttpRe
 		boolean isKeepAlive;
 		Map<String, List<String>> params = null;
 
+		//处理GET请求
 		if (msg.getMethod() == HttpMethod.GET){
-			
-			//ServerLogger.consoleLogger.info("����GET����");
-			
-			isKeepAlive = HttpHeaders.isKeepAlive(msg);			
-			uri = msg.getUri();
-			
-			QueryStringDecoder queryStringDecoder = new QueryStringDecoder(uri, Charset.forName("UTF-8"));
-	
-			contextPath = queryStringDecoder.path();
-	
-			params = queryStringDecoder.parameters();	
-		}else{
-			//����POST
-			//ServerLogger.consoleLogger.info("����POST����");
 			
 			isKeepAlive = HttpHeaders.isKeepAlive(msg);
 			uri = msg.getUri();
+			QueryStringDecoder queryStringDecoder = new QueryStringDecoder(uri, Charset.forName("UTF-8"));
+			contextPath = queryStringDecoder.path();
+			params = queryStringDecoder.parameters();
+		}else{
+			//处理POST请求
+			isKeepAlive = HttpHeaders.isKeepAlive(msg);
+			uri = msg.getUri();
 			contextPath = uri;
-			
 			params = new HashMap<String, List<String>>();
-			
 			HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(
 					new DefaultHttpDataFactory(false), msg);			
 			List<InterfaceHttpData> list = decoder.getBodyHttpDatas();
-			
 			System.out.println(list);
-			
 			List<String> postData = null;
 			for(InterfaceHttpData ifh: list){
 				String name = ifh.getName();
 				InterfaceHttpData data = decoder.getBodyHttpData(name);
-				
 				Attribute attribute = (Attribute) data;
 				String question = attribute.getValue();
 //				System.out.println(question);
@@ -103,9 +90,8 @@ public class AppHttpServerHandler extends SimpleChannelInboundHandler<FullHttpRe
 					postData = new ArrayList<String>();
 				}
 				postData.add(question);
-				
+				//添加到map
 				params.put(name, postData);
-				
 			}
 			
 			String name = ParamUtil.getParameterByName(USERNAME, params);
@@ -116,7 +102,7 @@ public class AppHttpServerHandler extends SimpleChannelInboundHandler<FullHttpRe
 			userService.save(user);
 			
 			FullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(HTTP_1_1, HttpResponseStatus.OK,
-					Unpooled.wrappedBuffer("�ɹ�".getBytes("UTF-8")));
+					Unpooled.wrappedBuffer("成功".getBytes("UTF-8")));
 			fullHttpResponse.headers().set(CONTENT_TYPE, "text/plain;charset=UTF-8");
 			fullHttpResponse.headers().set(CONTENT_LENGTH, fullHttpResponse.content().readableBytes());
 			fullHttpResponse.headers().set("Access-Control-Allow-Origin", "*");
@@ -124,12 +110,5 @@ public class AppHttpServerHandler extends SimpleChannelInboundHandler<FullHttpRe
 		}		
 
 	}
-
-//	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-//		if (evt instanceof IdleStateEvent) {
-//			ctx.close();
-//		}
-//	}
-	
 
 }

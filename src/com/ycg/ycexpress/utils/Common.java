@@ -63,8 +63,8 @@ public class Common {
 	}
 
 	/**
-	 * ������ת���ַ���
-	 * 
+	 * 将数组转成字符串
+	 *
 	 * @param array
 	 * @return
 	 */
@@ -73,6 +73,7 @@ public class Common {
 	}
 
 	/**
+	 * 获得无符号的byte
 	 *
 	 * @param Sign
 	 * @return
@@ -102,6 +103,7 @@ public class Common {
 	}
 
 	/**
+	 * byte数组转换为Mina ByteBuffer形式的String
 	 *
 	 * @param data
 	 * @return
@@ -124,6 +126,7 @@ public class Common {
 	}
 
 	/**
+	 * byte数组转化为String
 	 *
 	 * @param data
 	 * @return
@@ -142,6 +145,7 @@ public class Common {
 	}
 
 	/**
+	 * 将byte转换为long型
 	 */
 	public long byte2Long(byte a, byte b, byte c, byte d) {
 		return byte2Long(getNonSign(a), getNonSign(b), getNonSign(c), getNonSign(d));
@@ -152,6 +156,7 @@ public class Common {
 	}
 
 	/**
+	 * 10进制转换为16进制
 	 *
 	 * @param param
 	 * @return
@@ -167,6 +172,7 @@ public class Common {
 	}
 
 	/**
+	 * 16进制转换为10进制
 	 *
 	 * @param param
 	 * @return
@@ -179,54 +185,54 @@ public class Common {
 		for (int i = 0; i < param.length(); i++) {
 			val = 0;
 			switch (param.charAt(i)) {
-			case '0':
-				val = 0;
-				break;
-			case '1':
-				val = 1;
-				break;
-			case '2':
-				val = 2;
-				break;
-			case '3':
-				val = 3;
-				break;
-			case '4':
-				val = 4;
-				break;
-			case '5':
-				val = 5;
-				break;
-			case '6':
-				val = 6;
-				break;
-			case '7':
-				val = 7;
-				break;
-			case '8':
-				val = 8;
-				break;
-			case '9':
-				val = 9;
-				break;
-			case 'A':
-				val = 10;
-				break;
-			case 'B':
-				val = 11;
-				break;
-			case 'C':
-				val = 12;
-				break;
-			case 'D':
-				val = 13;
-				break;
-			case 'E':
-				val = 14;
-				break;
-			case 'F':
-				val = 15;
-				break;
+				case '0':
+					val = 0;
+					break;
+				case '1':
+					val = 1;
+					break;
+				case '2':
+					val = 2;
+					break;
+				case '3':
+					val = 3;
+					break;
+				case '4':
+					val = 4;
+					break;
+				case '5':
+					val = 5;
+					break;
+				case '6':
+					val = 6;
+					break;
+				case '7':
+					val = 7;
+					break;
+				case '8':
+					val = 8;
+					break;
+				case '9':
+					val = 9;
+					break;
+				case 'A':
+					val = 10;
+					break;
+				case 'B':
+					val = 11;
+					break;
+				case 'C':
+					val = 12;
+					break;
+				case 'D':
+					val = 13;
+					break;
+				case 'E':
+					val = 14;
+					break;
+				case 'F':
+					val = 15;
+					break;
 			}
 			ret = ret + (long) val * (long) (Math.pow(16, (param.length() - i - 1)));
 		}
@@ -262,10 +268,13 @@ public class Common {
 	}
 
 	/**
+	 * 定长BCD码转换成字节数组
 	 *
 	 * @param hex
+	 *            BCD码
 	 * @param fixedLen
-	 * @return
+	 *            长度
+	 * @return 字节数组
 	 */
 	public byte[] BCD2FixedBytes(String hex, int fixedLen) {
 		byte[] returnBytes = new byte[fixedLen];
@@ -286,6 +295,7 @@ public class Common {
 	}
 
 	/**
+	 * 将数组转成字符串 在调试或记录日志时用到
 	 *
 	 * @param array
 	 * @return
@@ -300,7 +310,7 @@ public class Common {
 		return sb.toString().trim();
 	}
 
-	public byte[] int2byte(int value, int arrayLen) { // ������תΪ�ֽ�����
+	public byte[] int2byte(int value, int arrayLen) { // 将整型转为字节数组
 		if (arrayLen < 1) {
 			arrayLen = 1;
 		}
@@ -418,10 +428,10 @@ public class Common {
 	}
 
 	/**
-	 * ����У��
-	 * 
-	 * @param
-	 * @return
+	 * 异或和校验
+	 *
+	 * @param 校验数组
+	 * @return 校验字节
 	 */
 	public byte getCheckSum(byte[] data) {
 		byte ret = 0;
@@ -433,9 +443,10 @@ public class Common {
 	}
 
 	/**
+	 * LRC 校验 LRC1：从长度开始到数据结束的每一个字节的异或值再异或0x33； LRC2：从长度开始到数据结束的每一个字节的累加和再加0x33
 	 *
 	 * @param data
-	 * @return
+	 * @return byte[LRC1、LRC2]
 	 */
 	public byte[] getLRC(byte[] data) {
 		byte[] LRC = new byte[2];
@@ -453,6 +464,7 @@ public class Common {
 	}
 
 	/**
+	 * 将包装好的字节转译 [0x7d]转成[0x7d, 0x01] ; [0x7e]转成[0x7d, 0x02]，,并在头尾加上标识符0x7e
 	 *
 	 * @param data
 	 * @return
@@ -494,6 +506,7 @@ public class Common {
 	}
 
 	/**
+	 * 去掉头尾的标识符，并将字节组转译 [0x7d, 0x01]转成[0x7d] ; [0x7d, 0x02]转成[0x7e]
 	 *
 	 * @param data
 	 * @return
@@ -525,6 +538,7 @@ public class Common {
 	}
 
 	/**
+	 * 去掉头尾的标识符，并将字节组转译 [0x7d, 0x01]转成[0x7d] ; [0x7d, 0x02]转成[0x7e]
 	 *
 	 * @param data
 	 * @return
@@ -639,10 +653,13 @@ public class Common {
 	}
 
 	/**
+	 * 将字符串转化成固定长度的数组，不足长度在后面补0x00，超过长度将丢失字符串后面部分
 	 *
 	 * @param s
+	 *            字符串
 	 * @param len
-	 * @return
+	 *            数组长度
+	 * @return 字节数组
 	 */
 	public byte[] str2fixedLenBytes(String s, int len) {
 		if (s == null || len < 0) {
@@ -655,6 +672,7 @@ public class Common {
 	}
 
 	/**
+	 * 通过文件锁的方式判断程序是否已经运行
 	 *
 	 * @return
 	 */
@@ -683,7 +701,7 @@ public class Common {
 
 	/**
 	 * NIO way
-	 * 
+	 *
 	 * @param filename
 	 * @return
 	 * @throws IOException
@@ -724,11 +742,15 @@ public class Common {
 	}
 
 	/**
+	 * 字符串转换到时间格式
 	 *
 	 * @param dateStr
+	 *            需要转换的字符串
 	 * @param formatStr
-	 * @return Date
+	 *            需要格式的目标字符串 举例 yyyy-MM-dd
+	 * @return Date 返回转换后的时间
 	 * @throws ParseException
+	 *             转换异常
 	 */
 	public Date StringToDate(String dateStr, String formatStr) {
 		DateFormat sdf = new SimpleDateFormat(formatStr);
@@ -794,11 +816,11 @@ public class Common {
 	public final byte[] MD5(String s) {
 		try {
 			byte[] btInput = s.getBytes();
-			// ���MD5ժҪ�㷨�� MessageDigest ����
+			// 获得MD5摘要算法的 MessageDigest 对象
 			MessageDigest mdInst = MessageDigest.getInstance("MD5");
-			// ʹ��ָ�����ֽڸ���ժҪ
+			// 使用指定的字节更新摘要
 			mdInst.update(btInput);
-			// �������
+			// 获得密文
 			byte[] md = mdInst.digest();
 			return md;
 		} catch (Exception e) {

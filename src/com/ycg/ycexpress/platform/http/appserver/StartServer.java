@@ -17,36 +17,40 @@ import io.netty.handler.codec.http.HttpServerCodec;
 
 @Service
 public class StartServer {
-	
+
 	@Autowired
 	private AppHttpServerHandler appHttpServerHandler;
 
 	public void start() {
 
+		// 服务类
 		ServerBootstrap b = new ServerBootstrap();
 
+		// 创建boss和worker
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 
 		try {
+			// 设置循环线程组事例
 			b.group(bossGroup, workerGroup);
 
+			// 设置channel工厂
 			b.channel(NioServerSocketChannel.class);
 
+			// 设置管道
 			b.childHandler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				public void initChannel(SocketChannel ch) throws Exception {
 					System.out.println(appHttpServerHandler);
 					ch.pipeline().addLast(new HttpServerCodec());
 					ch.pipeline().addLast(new HttpObjectAggregator(65536));
-					ch.pipeline().addLast(appHttpServerHandler); 
+					ch.pipeline().addLast(appHttpServerHandler);
 				}
 			});
 
-			b.option(ChannelOption.SO_BACKLOG, 2048);// ���ӻ���ض��д�С
-
+			b.option(ChannelOption.SO_BACKLOG, 2048);// 链接缓冲池队列大小
+			// 绑定端口
 			b.bind(8848).sync();
-
 			System.out.println("start!!!");
 		} catch (Exception e) {
 			e.printStackTrace();

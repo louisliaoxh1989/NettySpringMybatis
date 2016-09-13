@@ -7,13 +7,14 @@ import com.ycg.ycexpress.utils.Common;
 
 public class Main {
 
-	// �������
+	// 函数入口
 	public static void main(String[] args) throws Exception {
 		checkApplicaitonStatus();
 		startDB();
 	}
 
 	/**
+	 * 启动Spring集成的数据服务
 	 */
 	private static void startDB() {
 		try {
@@ -29,7 +30,7 @@ public class Main {
 
 	private static void checkApplicaitonStatus() {
 		if (Common.getInstance().isApplicaitonAlreadyRunning()) {
-			System.out.println(".....");
+			System.out.println("请勿多次打开同一程序, 程序已经运行......");
 			System.exit(0);
 		}
 	}

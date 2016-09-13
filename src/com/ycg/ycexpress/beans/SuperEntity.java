@@ -2,7 +2,7 @@ package com.ycg.ycexpress.beans;
 
 import java.io.Serializable;
 /**
- *
+ * 父实体类, 封装通用的属性及方法
  * @author Administrator
  *
  */
